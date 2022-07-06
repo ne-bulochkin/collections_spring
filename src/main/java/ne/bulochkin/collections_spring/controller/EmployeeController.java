@@ -19,19 +19,19 @@ public class EmployeeController {
 
     @GetMapping(path = "/add")
     public Employee add(@RequestParam(value = "firstName") String firstName,
-                        @RequestParam(value = "lastName") String lastName) throws EmployeeAlreadyAddedException, EmployeeStorageIsFullException {
+                        @RequestParam(value = "lastName") String lastName) {
         return employeeService.add(firstName, lastName);
     }
 
     @GetMapping(path = "/remove")
     public Employee remove(@RequestParam(value = "firstName") String firstName,
-                           @RequestParam(value = "lastName") String lastName) throws EmployeeNotFoundException {
+                           @RequestParam(value = "lastName") String lastName) {
         return employeeService.remove(firstName, lastName);
     }
 
     @GetMapping(path = "/find")
     public Employee find(@RequestParam(value = "firstName") String firstName,
-                         @RequestParam(value = "lastName") String lastName) throws EmployeeNotFoundException {
+                         @RequestParam(value = "lastName") String lastName) {
         return employeeService.find(firstName, lastName);
     }
 }

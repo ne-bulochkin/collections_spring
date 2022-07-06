@@ -15,7 +15,7 @@ public class EmployeeService {
     private List<Employee> employees = Arrays.asList(new Employee[10]);
 
 
-    public Employee add(String firstName, String lastName) throws EmployeeStorageIsFullException, EmployeeAlreadyAddedException {
+    public Employee add(String firstName, String lastName) {
         for (int i = 0; i < employees.size(); i++) {
             Employee addEmployee = new Employee(firstName, lastName);
             if (employees.get(i) == null) {
@@ -32,7 +32,7 @@ public class EmployeeService {
         return null;
     }
 
-    public Employee remove(String firstName, String lastName) throws EmployeeNotFoundException {
+    public Employee remove(String firstName, String lastName) {
         System.out.println(employees);
         Employee removeEmployee = new Employee(firstName, lastName);
         for (int i = 0; i < employees.size(); i++) {
@@ -47,7 +47,7 @@ public class EmployeeService {
         return null;
     }
 
-    public Employee find(String firstName, String lastName) throws EmployeeNotFoundException {
+    public Employee find(String firstName, String lastName) {
         Employee findEmployee = new Employee(firstName, lastName);
         for (Employee employee : employees) {
             if (employee != null) {
