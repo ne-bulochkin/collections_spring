@@ -6,54 +6,38 @@ import ne.bulochkin.collections_spring.exceptions.EmployeeStorageIsFullException
 import ne.bulochkin.collections_spring.model.Employee;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EmployeeService {
-    private List<Employee> employees = Arrays.asList(new Employee[10]);
-
+    private Map<String,Employee> employeeMap = new HashMap<>();
 
     public Employee add(String firstName, String lastName) {
-        for (int i = 0; i < employees.size(); i++) {
-            Employee addEmployee = new Employee(firstName, lastName);
-            if (employees.get(i) == null) {
-                employees.set(i, addEmployee);
-                return addEmployee;
-            }
-            if (employees.get(i).equals(addEmployee)) {
-                throw new EmployeeAlreadyAddedException("Данный сотрудник уже был добавлен в массив ранее!");
-            }
-            if (i == employees.size() - 1) {
-                throw new EmployeeStorageIsFullException("Массив сотрудников переполнен! Добавить не получилось!");
-            }
+        int EMPLOYEE_LIMIT = 10;
+        if(employeeMap.size()>= EMPLOYEE_LIMIT){
+            throw new EmployeeStorageIsFullException("Массив сотрудников переполнен! Добавить не получилось!");
+        } else if (!employeeMap.containsKey(firstName+lastName)){
+            employeeMap.put(firstName+lastName,new Employee(firstName, lastName));
+            return new Employee(firstName, lastName);
+        } else {
+            throw new EmployeeAlreadyAddedException("Данный сотрудник уже был добавлен в массив ранее!");
         }
-        return null;
     }
 
     public Employee remove(String firstName, String lastName) {
-        System.out.println(employees);
         Employee removeEmployee = new Employee(firstName, lastName);
-        for (int i = 0; i < employees.size(); i++) {
-            if (!employees.contains(removeEmployee)) {
-                throw new EmployeeNotFoundException("Данный сотрудник не найден, невозможно удалить!");
-            }
-            if (employees.get(i).equals(removeEmployee)) {
-                employees.set(i, null);
-                return removeEmployee;
-            }
+        if(employeeMap.containsKey(firstName+lastName)){
+            employeeMap.remove(firstName+lastName);
+            return removeEmployee;
+        } else {
+            throw new EmployeeNotFoundException("Данный сотрудник не найден, невозможно удалить!");
         }
-        return null;
     }
 
     public Employee find(String firstName, String lastName) {
         Employee findEmployee = new Employee(firstName, lastName);
-        for (Employee employee : employees) {
-            if (employee != null) {
-                if (employee.equals(findEmployee))
-                    return findEmployee;
-            }
+        if(employeeMap.containsKey(findEmployee+lastName)){
+            return findEmployee;
         }
         throw new EmployeeNotFoundException("Данный сотрудник не найден!");
     }
