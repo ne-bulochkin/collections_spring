@@ -1,15 +1,9 @@
 package ne.bulochkin.collections_spring.controller;
 
 import lombok.AllArgsConstructor;
-import ne.bulochkin.collections_spring.exceptions.EmployeeAlreadyAddedException;
-import ne.bulochkin.collections_spring.exceptions.EmployeeNotFoundException;
-import ne.bulochkin.collections_spring.exceptions.EmployeeStorageIsFullException;
 import ne.bulochkin.collections_spring.model.Employee;
 import ne.bulochkin.collections_spring.service.EmployeeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -17,13 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
-    @GetMapping(path = "/add")
+    @PostMapping(path = "/add")
     public Employee add(@RequestParam(value = "firstName") String firstName,
-                        @RequestParam(value = "lastName") String lastName) {
-        return employeeService.add(firstName, lastName);
+                        @RequestParam(value = "lastName") String lastName,
+                        @RequestParam(value = "department") String department,
+                        @RequestParam(value = "salary") int salary) {
+        return employeeService.add(firstName, lastName, department, salary);
     }
 
-    @GetMapping(path = "/remove")
+    @DeleteMapping(path = "/remove")
     public Employee remove(@RequestParam(value = "firstName") String firstName,
                            @RequestParam(value = "lastName") String lastName) {
         return employeeService.remove(firstName, lastName);
@@ -34,4 +30,6 @@ public class EmployeeController {
                          @RequestParam(value = "lastName") String lastName) {
         return employeeService.find(firstName, lastName);
     }
+
+
 }
