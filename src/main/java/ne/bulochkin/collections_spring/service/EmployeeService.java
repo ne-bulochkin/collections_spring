@@ -3,8 +3,10 @@ package ne.bulochkin.collections_spring.service;
 import ne.bulochkin.collections_spring.exceptions.EmployeeAlreadyAddedException;
 import ne.bulochkin.collections_spring.exceptions.EmployeeNotFoundException;
 import ne.bulochkin.collections_spring.exceptions.EmployeeStorageIsFullException;
+import ne.bulochkin.collections_spring.exceptions.EmployeeWrongFormatException;
 import ne.bulochkin.collections_spring.model.Department;
 import ne.bulochkin.collections_spring.model.Employee;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,6 +18,16 @@ public class EmployeeService {
 
     public Employee add(String firstName, String lastName, String department, int salary) {
         int EMPLOYEE_LIMIT = 10;
+        // check the format
+        if(!StringUtils.isAlpha(lastName+firstName)){
+            throw new EmployeeWrongFormatException("В фамилии и имени неправильные символы!");
+        }
+        // change first letter
+        lastName = StringUtils.capitalize(lastName);
+        firstName = StringUtils.capitalize(firstName);
+
+        //
+
         if (employeeMap.size() >= EMPLOYEE_LIMIT) {
             throw new EmployeeStorageIsFullException("Массив сотрудников переполнен! Добавить не получилось!");
         } else if (!employeeMap.containsKey(firstName + lastName)) {
