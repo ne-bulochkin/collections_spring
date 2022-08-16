@@ -53,27 +53,6 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void findEmployeeWithMaxSalaryByDepartment(){
-        Assertions.assertEquals(new Employee("Женя", "Бегов", "3", 99000),employeeService.findEmployeeWithMaxSalaryByDepartment("3"));
-    }
-
-    @Test
-    void findEmployeeWithMinSalaryByDepartment(){
-        Assertions.assertEquals(new Employee("Иван", "Супов", "3", 9000),employeeService.findEmployeeWithMinSalaryByDepartment("3"));
-    }
-
-    @Test
-    void findAllEmployeesByDepartment(){
-        Assertions.assertEquals(3,employeeService.findAllEmployeesByDepartment("1").size());
-        Assertions.assertEquals(2,employeeService.findAllEmployeesByDepartment("3").size());
-    }
-
-    @Test
-    void groupAllByDepartment(){
-        Assertions.assertEquals(2,employeeService.groupAllByDepartment().size());
-    }
-
-    @Test
     void removeEmployee(){
         employeeService.remove("Иван","Супов");
         Assertions.assertThrows(EmployeeNotFoundException.class,() -> employeeService.find("Иван","Супов"));

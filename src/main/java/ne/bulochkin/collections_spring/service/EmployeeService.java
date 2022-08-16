@@ -18,7 +18,7 @@ public class EmployeeService {
         return employeeMap;
     }
 
-    private Map<String, Employee> employeeMap = new HashMap<>();
+    private final Map<String, Employee> employeeMap = new HashMap<>();
 
     public Employee add(String firstName, String lastName, String department, int salary) {
         int EMPLOYEE_LIMIT = 10;
@@ -59,53 +59,6 @@ public class EmployeeService {
             return findEmployee;
         }
         throw new EmployeeNotFoundException("Данный сотрудник не найден!");
-    }
-
-    public Employee findEmployeeWithMaxSalaryByDepartment(String department) {
-        return employeeMap.values().stream()
-                .filter(e -> e.getDepartment().equals(department))
-                .max(Comparator.comparing(Employee::getSalary))
-                .orElseThrow();
-    }
-
-    public Employee findEmployeeWithMinSalaryByDepartment(String department) {
-        return employeeMap.values().stream()
-                .filter(e -> e.getDepartment().equals(department))
-                .min(Comparator.comparing(Employee::getSalary))
-                .orElseThrow();
-    }
-
-    public List<Employee> findAllEmployeesByDepartment(String department) {
-        return employeeMap.values().stream()
-                .filter(e -> e.getDepartment().equals(department))
-                .collect(Collectors.toList());
-    }
-
-    public List<Department> groupAllByDepartment() {
-        return employeeMap.values()
-                .stream()
-                .collect(Collectors.groupingBy(Employee::getDepartment))
-                .entrySet()
-                .stream()
-                .map(e -> {
-                    Department dep = new Department();
-                    dep.setDepartment(e.getKey());
-                    dep.setEmployees(e.getValue());
-                    return dep;
-                })
-                .collect(Collectors.toList());
-
-//        List<Department> result = new ArrayList<>();
-//
-//        for (String departmentString : departments) {
-//            Department dep = new Department();
-//            dep.setDepartment(departmentString);
-//            dep.setEmployees(employeeMap.values().stream()
-//                    .filter(employee -> employee.getDepartment().equals(departmentString)).collect(Collectors.toList()));
-//            result.add(dep);
-//        }
-//
-//        return result;
     }
 
 

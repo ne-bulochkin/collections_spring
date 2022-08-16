@@ -18,29 +18,26 @@ import java.util.Map;
 @AllArgsConstructor
 @RequestMapping(path = "/departments")
 public class DepartmentController {
-//    @Autowired
-//    private final EmployeeService employeeService;
-//
-//    @Autowired
-//    private final DepartmentService departmentService;
-//
-//    @GetMapping(path = "/max-salary")
-//    public Employee getMaxSalary(@RequestParam(value = "departmentId") String departmentId) {
-//        return employeeService.findEmployeeWithMaxSalaryByDepartment(departmentId);
-//    }
-//
-//    @GetMapping(path = "/min-salary")
-//    public Employee getMinSalary(@RequestParam(value = "departmentId") String departmentId) {
-//        return employeeService.findEmployeeWithMinSalaryByDepartment(departmentId);
-//    }
-//
-//    @GetMapping(path = "/all", params = "departmentId")
-//    public List<Employee> getAllByDepartment(@RequestParam(value = "departmentId") String departmentId) {
-//        return employeeService.findAllEmployeesByDepartment(departmentId);
-//    }
-//
-//    @GetMapping(path = "/all")
-//    public List<Department> getAll() {
-//        return departmentService.groupAllByDepartment();
-//    }
+
+    private final DepartmentService departmentService;
+
+    @GetMapping(path = "/max-salary")
+    public Employee getMaxSalary(@RequestParam(value = "departmentId") String departmentId) {
+        return departmentService.findEmployeeWithMaxSalaryByDepartment(departmentId);
+    }
+
+    @GetMapping(path = "/min-salary")
+    public Employee getMinSalary(@RequestParam(value = "departmentId") String departmentId) {
+        return departmentService.findEmployeeWithMinSalaryByDepartment(departmentId);
+    }
+
+    @GetMapping(path = "/all", params = "departmentId")
+    public List<Employee> getAllByDepartment(@RequestParam(value = "departmentId") String departmentId) {
+        return departmentService.findAllEmployeesByDepartment(departmentId);
+    }
+
+    @GetMapping(path = "/all")
+    public List<Department> getAll() {
+        return departmentService.groupAllByDepartment();
+    }
 }

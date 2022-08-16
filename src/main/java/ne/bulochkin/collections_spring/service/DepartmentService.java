@@ -4,6 +4,7 @@ import ne.bulochkin.collections_spring.model.Department;
 import ne.bulochkin.collections_spring.model.Employee;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,27 @@ public class DepartmentService {
     public DepartmentService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
+
+    public Employee findEmployeeWithMaxSalaryByDepartment(String department) {
+        return employeeService.getEmployeeMap().values().stream()
+                .filter(e -> e.getDepartment().equals(department))
+                .max(Comparator.comparing(Employee::getSalary))
+                .orElseThrow();
+    }
+
+    public Employee findEmployeeWithMinSalaryByDepartment(String department) {
+        return employeeService.getEmployeeMap().values().stream()
+                .filter(e -> e.getDepartment().equals(department))
+                .min(Comparator.comparing(Employee::getSalary))
+                .orElseThrow();
+    }
+
+    public List<Employee> findAllEmployeesByDepartment(String department) {
+        return employeeService.getEmployeeMap().values().stream()
+                .filter(e -> e.getDepartment().equals(department))
+                .collect(Collectors.toList());
+    }
+
 
     public List<Department> groupAllByDepartment() {
         return employeeService.getEmployeeMap().values()
