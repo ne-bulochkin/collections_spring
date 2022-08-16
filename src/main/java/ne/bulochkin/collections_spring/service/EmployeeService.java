@@ -14,6 +14,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
+    public Map<String, Employee> getEmployeeMap() {
+        return employeeMap;
+    }
+
     private Map<String, Employee> employeeMap = new HashMap<>();
 
     public Employee add(String firstName, String lastName, String department, int salary) {
